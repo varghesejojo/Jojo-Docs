@@ -1,6 +1,7 @@
 import hashlib
 from cryptography.fernet import Fernet
 from django.conf import settings
+print(Fernet.generate_key().decode())
 
 cipher = Fernet(settings.ENCRYPTION_KEY.encode())
 
