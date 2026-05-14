@@ -1,27 +1,51 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 function ProtectedRoute() {
-  const token = localStorage.getItem("access");
+  const location = useLocation();
 
-  if (!token) {
-    return <Navigate to="/login" replace />;
+  const accessToken = localStorage.getItem("access");
+
+  // Not logged in
+  if (!accessToken) {
+    return (
+      <Navigate
+        to="/login"
+        state={{ from: location }}
+        replace
+      />
+    );
   }
 
   try {
+    // Decode JWT payload
     const payload = JSON.parse(
-      atob(token.split(".")[1])
+      atob(accessToken.split(".")[1])
     );
 
+    // Check token expiry
     if (payload.exp * 1000 < Date.now()) {
       localStorage.clear();
-      return <Navigate to="/login" replace />;
+
+      return (
+        <Navigate
+          to="/login"
+          replace
+        />
+      );
     }
 
+    // Logged in
     return <Outlet />;
 
-  } catch {
+  } catch (error) {
     localStorage.clear();
-    return <Navigate to="/login" replace />;
+
+    return (
+      <Navigate
+        to="/login"
+        replace
+      />
+    );
   }
 }
 

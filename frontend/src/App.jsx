@@ -1,19 +1,32 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
-import ProtectedRoute from "./routes/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
-
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
+  const token = localStorage.getItem("access");
+
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* Public Route */}
-        <Route path="/login" element={<LoginPage />} />
+        {/* Public */}
+        <Route
+          path="/login"
+          element={
+            token
+              ? <Navigate to="/dashboard" replace />
+              : <LoginPage />
+          }
+        />
 
-        {/* Protected Routes */}
+        {/* Protected */}
         <Route element={<ProtectedRoute />}>
           <Route
             path="/dashboard"
@@ -22,7 +35,15 @@ function App() {
         </Route>
 
         {/* Default */}
-        <Route path="*" element={<LoginPage />} />
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to={token ? "/dashboard" : "/login"}
+              replace
+            />
+          }
+        />
 
       </Routes>
     </BrowserRouter>
