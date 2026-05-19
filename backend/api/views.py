@@ -101,7 +101,7 @@ class   GoogleLoginView(APIView):
                     "email_hash": email_hash,
                     "session_id": session_id,
                     "type": "access",
-                    "exp": current_time + datetime.timedelta(minutes=15)
+                    "exp": current_time + datetime.timedelta(minutes=5)
                 },
                 settings.JWT_SECRET,
                 algorithm="HS256"
@@ -165,7 +165,7 @@ class RefreshTokenView(APIView):
                     "email_hash": payload["email_hash"],
                     "session_id": payload["session_id"],
                     "type": "access",
-                    "exp": timezone.now() + datetime.timedelta(minutes=15)
+                    "exp": timezone.now() + datetime.timedelta(minutes=5)
                 },
                 settings.JWT_SECRET,
                 algorithm="HS256"

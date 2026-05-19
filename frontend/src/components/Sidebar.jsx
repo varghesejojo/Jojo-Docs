@@ -44,7 +44,7 @@ function Sidebar({ dark, sidebarOpen, onClose, onLogout }) {
 
         {/* Storage & Logout */}
         <div className="mt-auto">
-          <div className="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-3xl p-5 text-white">
+          <div className="bg-linear-to-br from-blue-600 to-indigo-600 rounded-3xl p-5 text-white">
             <p className="text-sm opacity-90">Storage</p>
             <h3 className="text-3xl font-bold mt-1">72%</h3>
             <div className="w-full bg-white/20 rounded-full h-2 mt-4 overflow-hidden">

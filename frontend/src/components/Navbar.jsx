@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 
 function Navbar({ dark, setDark, user, onMenuClick }) {
+  console.log("Navbar received user:", user.picture);
   return (
     <header className={`sticky top-0 z-50 ${dark ? 'bg-gray-900/80 border-gray-700' : 'bg-white/80 border-gray-200'} backdrop-blur-md border-b`}>
       <div className="h-16 px-4 md:px-6 flex items-center justify-between gap-4">
@@ -62,6 +63,7 @@ function Navbar({ dark, setDark, user, onMenuClick }) {
           </button>
 
           <div className={`flex items-center gap-2 pl-2 ml-1 ${dark ? 'sm:border-gray-700' : 'sm:border-l'}`}>
+          {console.log("User in Navbar:", user)}
             <img
               src={user?.picture || "https://ui-avatars.com/api/?name=User&background=3b82f6&color=fff&rounded=true&bold=true"}
               alt="profile"

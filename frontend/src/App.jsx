@@ -13,7 +13,6 @@ function App() {
   const token = localStorage.getItem("access");
 
   return (
-    <BrowserRouter>
       <Routes>
 
         {/* Public */}
@@ -46,7 +45,6 @@ function App() {
         />
 
       </Routes>
-    </BrowserRouter>
   );
 }
 

@@ -5,7 +5,6 @@ function ProtectedRoute() {
 
   const accessToken = localStorage.getItem("access");
 
-  // Not logged in
   if (!accessToken) {
     return (
       <Navigate
@@ -16,37 +15,7 @@ function ProtectedRoute() {
     );
   }
 
-  try {
-    // Decode JWT payload
-    const payload = JSON.parse(
-      atob(accessToken.split(".")[1])
-    );
-
-    // Check token expiry
-    if (payload.exp * 1000 < Date.now()) {
-      localStorage.clear();
-
-      return (
-        <Navigate
-          to="/login"
-          replace
-        />
-      );
-    }
-
-    // Logged in
-    return <Outlet />;
-
-  } catch (error) {
-    localStorage.clear();
-
-    return (
-      <Navigate
-        to="/login"
-        replace
-      />
-    );
-  }
+  return <Outlet />;
 }
 
 export default ProtectedRoute;

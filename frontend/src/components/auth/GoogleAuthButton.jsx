@@ -1,9 +1,11 @@
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
 
 function GoogleAuthButton() {
     const navigate = useNavigate();
+     const { fetchUser } = useAuth();
     const handleSuccess = async (credentialResponse) => {
         const deviceInfo = {
             user_agent: navigator.userAgent,
@@ -23,7 +25,7 @@ function GoogleAuthButton() {
 
             localStorage.setItem("access", res.data.access);
             localStorage.setItem("refresh", res.data.refresh);
-            localStorage.setItem("user", JSON.stringify(res.data.user));
+            await fetchUser();
             navigate("/dashboard");
 
         } catch (error) {

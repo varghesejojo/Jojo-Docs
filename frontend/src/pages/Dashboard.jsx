@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { useTheme } from "../components/auth/context/ThemeContext";
+import { useAuth } from "../components/auth/context/AuthContext";
+
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import MainContent from "../components/MainContent";
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user"));
+
   const { dark, setDark } = useTheme();
 
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.href = "/login";
-  };
+  const { user, logout, loading ,fetchUser} = useAuth();
+  console.log("Authenticated user:", user);
 
   const recentDocs = [
     {
@@ -32,10 +32,23 @@ function Dashboard() {
     },
   ];
 
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
   return (
-    <div className={`min-h-screen ${dark ? 'bg-gray-900' : 'bg-[#f6f8fc]'} ${dark ? 'text-gray-100' : 'text-gray-800'}`}>
-      
-      <Navbar 
+    <div
+      className={`min-h-screen ${
+        dark
+          ? "bg-gray-900 text-gray-100"
+          : "bg-[#f6f8fc] text-gray-800"
+      }`}
+    >
+      <Navbar
         dark={dark}
         setDark={setDark}
         user={user}
@@ -43,7 +56,6 @@ function Dashboard() {
       />
 
       <div className="flex">
-        {/* Mobile Overlay */}
         {sidebarOpen && (
           <div
             className="fixed inset-0 bg-black/40 z-40 md:hidden"
@@ -51,14 +63,14 @@ function Dashboard() {
           />
         )}
 
-        <Sidebar 
+        <Sidebar
           dark={dark}
           sidebarOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
-          onLogout={handleLogout}
+          onLogout={logout}
         />
 
-        <MainContent 
+        <MainContent
           dark={dark}
           recentDocs={recentDocs}
         />

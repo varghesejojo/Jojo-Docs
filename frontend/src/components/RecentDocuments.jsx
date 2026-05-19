@@ -24,7 +24,7 @@ function RecentDocuments({ dark, recentDocs }) {
             className={`flex items-center justify-between gap-4 px-4 sm:px-6 py-5 border-b last:border-b-0 ${dark ? 'border-gray-700 hover:bg-gray-700/50' : 'hover:bg-gray-50'} transition`}
           >
             <div className="flex items-center gap-4 min-w-0">
-              <div className={`h-12 w-12 rounded-2xl ${dark ? 'bg-blue-900/30' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0`}>
+              <div className={`h-12 w-12 rounded-2xl ${dark ? 'bg-blue-900/30' : 'bg-blue-100'} flex items-center justify-center shrink-0`}>
                 <FileText className={`w-6 h-6 ${dark ? 'text-blue-400' : 'text-blue-600'}`} />
               </div>
               <div className="min-w-0">
@@ -36,7 +36,7 @@ function RecentDocuments({ dark, recentDocs }) {
                 </p>
               </div>
             </div>
-            <button className={`p-2 rounded-xl ${dark ? 'hover:bg-gray-600' : 'hover:bg-gray-100'} flex-shrink-0`}>
+            <button className={`p-2 rounded-xl ${dark ? 'hover:bg-gray-600' : 'hover:bg-gray-100'} shrink-0`}>
               <MoreVertical className={`w-5 h-5 ${dark ? 'text-gray-400' : ''}`} />
             </button>
           </div>
