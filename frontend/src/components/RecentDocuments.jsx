@@ -1,6 +1,9 @@
 import { LayoutGrid, FileText, MoreVertical } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 
 function RecentDocuments({ dark, recentDocs }) {
+  const navigate = useNavigate();
   return (
     <section className="mt-14">
       <div className="flex items-center justify-between mb-6">
@@ -20,7 +23,8 @@ function RecentDocuments({ dark, recentDocs }) {
       <div className={`${dark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} rounded-3xl border overflow-hidden shadow-sm`}>
         {recentDocs.map((doc, index) => (
           <div
-            key={index}
+            key={doc._id}
+            onClick={() => navigate(`/document/${doc._id}`)}
             className={`flex items-center justify-between gap-4 px-4 sm:px-6 py-5 border-b last:border-b-0 ${dark ? 'border-gray-700 hover:bg-gray-700/50' : 'hover:bg-gray-50'} transition`}
           >
             <div className="flex items-center gap-4 min-w-0">
@@ -32,7 +36,7 @@ function RecentDocuments({ dark, recentDocs }) {
                   {doc.title}
                 </h4>
                 <p className={`text-sm truncate ${dark ? 'text-gray-400' : 'text-gray-500'}`}>
-                  {doc.owner} • {doc.date}
+                  {doc.owner_name}
                 </p>
               </div>
             </div>

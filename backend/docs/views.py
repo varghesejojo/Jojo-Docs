@@ -99,6 +99,7 @@ class DocumentDetailView(APIView):
     def put(self, request, document_id):
         try:
             data = request.data
+            print(f"Updating document {document_id} with data: {data}")
             result = users_documents_collection.update_one(
                 {
                     "_id": ObjectId(document_id),

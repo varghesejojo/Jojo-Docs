@@ -1,7 +1,7 @@
 import { Plus, FileText, Clock3, Star, Folder, Trash2, LogOut, X } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 
-function Sidebar({ dark, sidebarOpen, onClose, onLogout }) {
+function Sidebar({ dark, sidebarOpen, onClose, onLogout, onCreateDocument, }) {
   return (
     <aside
       className={`
@@ -28,8 +28,10 @@ function Sidebar({ dark, sidebarOpen, onClose, onLogout }) {
         </div>
 
         {/* Create Button */}
-        <button className="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl py-4 font-semibold shadow-lg transition-all">
-          <Plus className="w-5 h-5" />
+        <button
+          onClick={onCreateDocument}
+          className="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl py-4 font-semibold shadow-lg transition-all"
+        >          <Plus className="w-5 h-5" />
           Create New Doc
         </button>
 
