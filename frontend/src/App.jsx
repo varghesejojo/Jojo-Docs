@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Editor from "./pages/Editor";
+import Trash from "./pages/Trash";
 
 function App() {
   const token = localStorage.getItem("access");
@@ -36,6 +37,10 @@ function App() {
       <Route
         path="/document/:documentId"
         element={<Editor />}
+      />
+      <Route
+        path="/trash"
+        element={<Trash />}
       />
 
       {/* Default */}

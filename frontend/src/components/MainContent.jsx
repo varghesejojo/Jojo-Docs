@@ -3,7 +3,7 @@ import TemplateCard from "./TemplateCard";
 import TemplateImageCard from "./TemplateImageCard";
 import RecentDocuments from "./RecentDocuments";  // ← Add this import
 
-function MainContent({ dark, recentDocs }) {
+function MainContent({ dark, recentDocs, onRename, onDelete }) {
   return (
     <main className="flex-1 min-w-0 p-4 sm:p-6 md:p-10 overflow-x-hidden">
       {/* Welcome */}
@@ -53,7 +53,8 @@ function MainContent({ dark, recentDocs }) {
       </section>
 
       {/* Recent Documents Section */}
-      <RecentDocuments dark={dark} recentDocs={recentDocs} />
+      <RecentDocuments dark={dark} recentDocs={recentDocs} onRename={onRename}
+        onDelete={onDelete} />
     </main>
   );
 }

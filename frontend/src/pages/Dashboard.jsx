@@ -7,6 +7,9 @@ import Sidebar from "../components/Sidebar";
 import MainContent from "../components/MainContent";
 import { useNavigate } from "react-router-dom";
 import { createDocument, getDocuments } from "../services/documentService";
+import RenameDocumentModal from "../components/modals/RenameDocumentModal";
+import DeleteDocumentModal from "../components/modals/DeleteDocumentModal";
+import AppLayout from "../layouts/AppLayout";
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -18,6 +21,8 @@ function Dashboard() {
   const navigate = useNavigate();
 
   const [recentDocs, setRecentDocs] = useState([]);
+  const [renameDoc, setRenameDoc] = useState(null);
+  const [deleteDoc, setDeleteDoc] = useState(null);
   useEffect(() => {
     fetchDocuments();
   }, []);
@@ -60,41 +65,42 @@ function Dashboard() {
   }
 
   return (
-    <div
-      className={`min-h-screen ${dark
-        ? "bg-gray-900 text-gray-100"
-        : "bg-[#f6f8fc] text-gray-800"
-        }`}
-    >
-      <Navbar
-        dark={dark}
-        setDark={setDark}
-        user={user}
-        onMenuClick={() => setSidebarOpen(true)}
-      />
-
-      <div className="flex">
-        {sidebarOpen && (
-          <div
-            className="fixed inset-0 bg-black/40 z-40 md:hidden"
-            onClick={() => setSidebarOpen(false)}
+    <>
+      {
+        renameDoc && (
+          <RenameDocumentModal
+            dark={dark}
+            document={renameDoc}
+            onClose={() => setRenameDoc(null)}
+            onSuccess={fetchDocuments}
           />
-        )}
+        )
+      }
 
-        <Sidebar
-          dark={dark}
-          sidebarOpen={sidebarOpen}
-          onClose={() => setSidebarOpen(false)}
-          onLogout={logout}
-          onCreateDocument={handleCreateDocument}
-        />
+      {
+        deleteDoc && (
+          <DeleteDocumentModal
+            dark={dark}
+            document={deleteDoc}
+            onClose={() => setDeleteDoc(null)}
+            onSuccess={fetchDocuments}
+          />
+        )
+      }
+      <AppLayout
+        onCreateDocument={
+          handleCreateDocument
+        }
+      >
 
         <MainContent
           dark={dark}
           recentDocs={recentDocs}
+          onRename={setRenameDoc}
+          onDelete={setDeleteDoc}
         />
-      </div>
-    </div>
+      </AppLayout>
+    </>
   );
 }
 
