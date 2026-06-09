@@ -229,25 +229,27 @@ class RecentDocumentsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-
-        docs = list(
-            users_documents_collection.find(
-                {
-                    "owner_id": ObjectId(request.user.id),
-                    "is_deleted": {
-                        "$ne": True
+        try:
+            docs = list(
+                users_documents_collection.find(
+                    {
+                        "owner_id": ObjectId(request.user.id),
+                        "is_deleted": {
+                            "$ne": True
+                        }
                     }
-                }
-            ).sort(
-                "updated_at",
-                -1
+                ).sort(
+                    "updated_at",
+                    -1
+                )
             )
-        )
 
-        for doc in docs:
-            doc["_id"] = str(doc["_id"])
-            doc["owner_id"] = str(doc["owner_id"])
+            for doc in docs:
+                doc["_id"] = str(doc["_id"])
+                doc["owner_id"] = str(doc["owner_id"])
 
-        return Response(docs)
-    
+            return Response(docs)
+        except Exception as e:
+            print(f"Error fetching recent documents: {str(e)}")
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
