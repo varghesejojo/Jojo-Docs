@@ -1,9 +1,9 @@
 import { LayoutGrid, Plus } from "lucide-react";
 import TemplateCard from "./TemplateCard";
 import TemplateImageCard from "./TemplateImageCard";
-import RecentDocuments from "./RecentDocuments";  // ← Add this import
+import DocumentList from "./DocumentList";
 
-function MainContent({ dark, recentDocs, onRename, onDelete }) {
+function MainContent({ dark, recentDocs, onRename, onDelete, fetchDocuments }) {
   return (
     <main className="flex-1 min-w-0 p-4 sm:p-6 md:p-10 overflow-x-hidden">
       {/* Welcome */}
@@ -53,8 +53,15 @@ function MainContent({ dark, recentDocs, onRename, onDelete }) {
       </section>
 
       {/* Recent Documents Section */}
-      <RecentDocuments dark={dark} recentDocs={recentDocs} onRename={onRename}
-        onDelete={onDelete} />
+      <DocumentList
+        title="My Documents"
+        subtitle="Your recently opened files"
+        dark={dark}
+        documents={recentDocs}
+        onRename={onRename}
+        onDelete={onDelete}
+        fetchDocuments={fetchDocuments}
+      />
     </main>
   );
 }

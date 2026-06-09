@@ -125,10 +125,10 @@ function Trash() {
 
       <div className="mb-8">
 
-        <h3 className="text-3xl font-bold flex items-center gap-3">
+        <h1 className="text-3xl font-bold flex items-center gap-3">
           <Trash2 className="w-8 h-8 text-red-500" />
           Trash
-        </h3>
+        </h1>
 
         <p className="text-gray-500 mt-2">
           Deleted documents can be restored.

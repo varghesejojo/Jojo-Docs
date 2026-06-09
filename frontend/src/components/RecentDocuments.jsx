@@ -5,21 +5,48 @@ import {
   MoreVertical,
   Pencil,
   Edit,
-  Trash2,
+  Trash2, Star,
 } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
+import {
+  starDocument,
+  unstarDocument,
+} from "../services/documentService";
 
 function RecentDocuments({
   dark,
   recentDocs,
   onRename,
-  onDelete,
+  onDelete, fetchDocuments
 }) {
 
   const navigate = useNavigate();
 
   const [openMenu, setOpenMenu] = useState(null);
+  const toggleStar = async (doc) => {
+
+    try {
+
+      if (doc.is_starred) {
+
+        await unstarDocument(doc._id);
+
+      } else {
+
+        await starDocument(doc._id);
+
+      }
+
+      fetchDocuments(); // refresh list
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
 
   return (
     <section className="mt-14">
@@ -31,7 +58,7 @@ function RecentDocuments({
             className={`text-2xl font-bold ${dark ? "text-gray-100" : ""
               }`}
           >
-            Recent Documents
+            Documents
           </h3>
 
           <p
@@ -44,8 +71,8 @@ function RecentDocuments({
 
         <button
           className={`p-2 rounded-xl ${dark
-              ? "hover:bg-gray-800"
-              : "hover:bg-gray-100"
+            ? "hover:bg-gray-800"
+            : "hover:bg-gray-100"
             }`}
         >
           <LayoutGrid
@@ -58,8 +85,8 @@ function RecentDocuments({
 
       <div
         className={`${dark
-            ? "bg-gray-800 border-gray-700"
-            : "bg-white border-gray-200"
+          ? "bg-gray-800 border-gray-700"
+          : "bg-white border-gray-200"
           } rounded-3xl border shadow-sm overflow-visible`}
       >
 
@@ -71,8 +98,8 @@ function RecentDocuments({
               navigate(`/document/${doc._id}`)
             }
             className={`flex items-center justify-between gap-4 px-4 sm:px-6 py-5 border-b last:border-b-0 cursor-pointer ${dark
-                ? "border-gray-700 hover:bg-gray-700/50"
-                : "hover:bg-gray-50"
+              ? "border-gray-700 hover:bg-gray-700/50"
+              : "hover:bg-gray-50"
               } transition`}
           >
 
@@ -81,15 +108,15 @@ function RecentDocuments({
 
               <div
                 className={`h-12 w-12 rounded-2xl ${dark
-                    ? "bg-blue-900/30"
-                    : "bg-blue-100"
+                  ? "bg-blue-900/30"
+                  : "bg-blue-100"
                   } flex items-center justify-center shrink-0`}
               >
 
                 <FileText
                   className={`w-6 h-6 ${dark
-                      ? "text-blue-400"
-                      : "text-blue-600"
+                    ? "text-blue-400"
+                    : "text-blue-600"
                     }`}
                 />
 
@@ -99,8 +126,8 @@ function RecentDocuments({
 
                 <h4
                   className={`font-semibold truncate ${dark
-                      ? "text-gray-100"
-                      : ""
+                    ? "text-gray-100"
+                    : ""
                     }`}
                 >
                   {doc.title}
@@ -108,8 +135,8 @@ function RecentDocuments({
 
                 <p
                   className={`text-sm truncate ${dark
-                      ? "text-gray-400"
-                      : "text-gray-500"
+                    ? "text-gray-400"
+                    : "text-gray-500"
                     }`}
                 >
                   {doc.owner_name}
@@ -120,103 +147,136 @@ function RecentDocuments({
             </div>
 
             {/* RIGHT */}
-            <div className="relative">
-
+            <div className="flex items-center gap-2">
+              {/* STAR */}
               <button
                 onClick={(e) => {
+
                   e.stopPropagation();
 
-                  setOpenMenu(
-                    openMenu === doc._id
-                      ? null
-                      : doc._id
-                  );
+                  toggleStar(doc);
+
                 }}
-                className={`p-2 rounded-xl ${dark
-                    ? "hover:bg-gray-600"
-                    : "hover:bg-gray-100"
-                  }`}
+                className="
+                    p-2
+                    rounded-full
+                    hover:bg-yellow-50
+                    dark:hover:bg-yellow-900/20
+                    transition
+              "
               >
 
-                <MoreVertical
-                  className={`w-5 h-5 ${dark
-                      ? "text-gray-400"
-                      : ""
-                    }`}
+                <Star
+                  size={20}
+                  className={
+                    doc.is_starred
+                      ? "text-yellow-500 fill-yellow-500"
+                      : dark
+                        ? "text-gray-400"
+                        : "text-gray-500"
+                  }
                 />
 
               </button>
 
-              {/* MENU */}
-              {openMenu === doc._id && (
+              <div className="relative">
 
-                <div
-                  className={`absolute right-0 top-12 w-52 rounded-xl shadow-lg border z-50 ${dark
-                      ? "bg-gray-800 border-gray-700"
-                      : "bg-white border-gray-200"
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+
+                    setOpenMenu(
+                      openMenu === doc._id
+                        ? null
+                        : doc._id
+                    );
+                  }}
+                  className={`p-2 rounded-xl ${dark
+                    ? "hover:bg-gray-600"
+                    : "hover:bg-gray-100"
                     }`}
                 >
 
-                  {/* EDIT */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
+                  <MoreVertical
+                    className={`w-5 h-5 ${dark
+                      ? "text-gray-400"
+                      : ""
+                      }`}
+                  />
 
-                      navigate(
-                        `/document/${doc._id}`
-                      );
+                </button>
 
-                      setOpenMenu(null);
-                    }}
-                    className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700"
+                {/* MENU */}
+                {openMenu === doc._id && (
+
+                  <div
+                    className={`absolute right-0 top-12 w-52 rounded-xl shadow-lg border z-50 ${dark
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
+                      }`}
                   >
 
-                    <Edit size={18} />
+                    {/* EDIT */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
 
-                    Edit
+                        navigate(
+                          `/document/${doc._id}`
+                        );
 
-                  </button>
+                        setOpenMenu(null);
+                      }}
+                      className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
 
-                  {/* RENAME */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
+                      <Edit size={18} />
 
-                      onRename(doc);
+                      Edit
 
-                      setOpenMenu(null);
-                    }}
-                    className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
+                    </button>
 
-                    <Pencil size={18} />
+                    {/* RENAME */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
 
-                    Rename
+                        onRename(doc);
 
-                  </button>
+                        setOpenMenu(null);
+                      }}
+                      className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
 
-                  {/* DELETE */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
+                      <Pencil size={18} />
 
-                      onDelete(doc);
+                      Rename
 
-                      setOpenMenu(null);
-                    }}
-                    className="flex items-center gap-3 w-full px-4 py-3 text-left text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
-                  >
+                    </button>
 
-                    <Trash2 size={18} />
+                    {/* DELETE */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
 
-                    Move To Trash
+                        onDelete(doc);
 
-                  </button>
+                        setOpenMenu(null);
+                      }}
+                      className="flex items-center gap-3 w-full px-4 py-3 text-left text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
+                    >
 
-                </div>
+                      <Trash2 size={18} />
 
-              )}
+                      Move To Trash
 
+                    </button>
+
+                  </div>
+
+                )}
+
+              </div>
             </div>
 
           </div>
@@ -224,6 +284,7 @@ function RecentDocuments({
         ))}
 
       </div>
+
 
     </section>
   );

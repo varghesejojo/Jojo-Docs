@@ -1,6 +1,6 @@
 import api from "../config/api";
 
-  //  DOCUMENTS
+//  DOCUMENTS
 export const getDocuments = async () => {
   console.log("Fetching documents...");
 
@@ -21,7 +21,7 @@ export const createDocument = async () => {
   return response.data;
 };
 
-  //  DOCUMENT DETAILS
+//  DOCUMENT DETAILS
 
 export const getDocument = async (documentId) => {
 
@@ -45,7 +45,7 @@ export const updateDocument = async (
   return response.data;
 };
 
-  //  RENAME
+//  RENAME
 
 
 export const renameDocument = async (
@@ -63,7 +63,7 @@ export const renameDocument = async (
   return response.data;
 };
 
-  //  SOFT DELETE
+//  SOFT DELETE
 
 
 export const moveToTrash = async (
@@ -80,7 +80,7 @@ export const moveToTrash = async (
   return response.data;
 };
 
-  //  RESTORE
+//  RESTORE
 
 
 export const restoreDocument = async (
@@ -97,7 +97,7 @@ export const restoreDocument = async (
   return response.data;
 };
 
-  //  STAR
+//  STAR
 
 
 export const starDocument = async (
@@ -128,7 +128,7 @@ export const unstarDocument = async (
   return response.data;
 };
 
-   //  PERMANENT DELETE
+//  PERMANENT DELETE
 
 
 export const deleteForever = async (
@@ -142,7 +142,7 @@ export const deleteForever = async (
   return response.data;
 };
 
-   //  TRASH DOCUMENTS
+//  TRASH DOCUMENTS
 
 
 export const getTrashDocuments = async () => {
@@ -154,15 +154,25 @@ export const getTrashDocuments = async () => {
   return response.data;
 };
 
-   //  STARRED DOCUMENTS
+//  STARRED DOCUMENTS
 
 
 export const getStarredDocuments =
   async () => {
 
     const response = await api.get(
-      "docs/documents/starred/"
+      "docs/starred/"
     );
 
     return response.data;
   };
+
+//  Recent DOCUMENTS
+export const getRecentDocuments = async () => {
+
+  const response = await api.get(
+    "docs/recent/"
+  );
+
+  return response.data;
+};

@@ -5,7 +5,8 @@ urlpatterns = [
     path('user-details/', UserDetailsView.as_view(), name='user-details'),
     path('documents/', DocumentView.as_view(), name='documents'),
     path('documents/<str:document_id>/', DocumentDetailView.as_view(), name='document-detail'),
-    # path('documents/<str:document_id>/star/', StarDocumentView.as_view(), name='star-document'),
+    path('starred/', StarredDocumentsView.as_view(), name='starred-documents'),
     path('trash/', TrashView.as_view(), name='trash'),
+    path("recent/",RecentDocumentsView.as_view(),  name="recent-documents"),
     
 ]

@@ -98,6 +98,7 @@ function Dashboard() {
           recentDocs={recentDocs}
           onRename={setRenameDoc}
           onDelete={setDeleteDoc}
+           fetchDocuments={fetchDocuments}
         />
       </AppLayout>
     </>
