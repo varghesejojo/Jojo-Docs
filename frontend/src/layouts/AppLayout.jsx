@@ -32,11 +32,10 @@ function AppLayout({
 
   return (
     <div
-      className={`min-h-screen ${
-        dark
+      className={`min-h-screen ${dark
           ? "bg-gray-900 text-white"
           : "bg-[#f6f8fc] text-gray-900"
-      }`}
+        }`}
     >
 
       <Navbar
@@ -71,8 +70,7 @@ function AppLayout({
           }
         />
 
-        <main className="flex-1 p-8">
-          {children}
+        <main className="flex-1 min-w-0 p-4 md:p-6 lg:p-8 overflow-x-hidden">          {children}
         </main>
 
       </div>
