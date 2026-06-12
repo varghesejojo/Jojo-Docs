@@ -359,7 +359,7 @@ export default function Editor() {
 
             {/* Back */}
             <button
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate(-1)}
               className="
                 flex items-center justify-center w-9 h-9 rounded-xl
                 text-[#6b6375] dark:text-[#9ca3af]

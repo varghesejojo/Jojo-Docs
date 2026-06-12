@@ -2,13 +2,14 @@ import { useState } from "react";
 
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import { useNavigate } from "react-router-dom";
 
 import { useTheme } from "../components/auth/context/ThemeContext";
 import { useAuth } from "../components/auth/context/AuthContext";
+import { createDocument } from "../services/documentService";
 
 function AppLayout({
   children,
-  onCreateDocument,
 }) {
 
   const [sidebarOpen, setSidebarOpen] =
@@ -20,7 +21,23 @@ function AppLayout({
     user,
     logout,
     loading,
+
   } = useAuth();
+  const navigate = useNavigate();
+  const handleCreateDocument = async () => {
+
+    try {
+
+      const response = await createDocument();
+
+      navigate(`/document/${response.document_id}`);
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+  };
 
   if (loading) {
     return (
@@ -33,8 +50,8 @@ function AppLayout({
   return (
     <div
       className={`min-h-screen ${dark
-          ? "bg-gray-900 text-white"
-          : "bg-[#f6f8fc] text-gray-900"
+        ? "bg-gray-900 text-white"
+        : "bg-[#f6f8fc] text-gray-900"
         }`}
     >
 
@@ -66,7 +83,7 @@ function AppLayout({
           }
           onLogout={logout}
           onCreateDocument={
-            onCreateDocument
+            handleCreateDocument
           }
         />
 

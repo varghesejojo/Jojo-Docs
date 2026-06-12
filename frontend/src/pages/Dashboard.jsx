@@ -41,20 +41,7 @@ function Dashboard() {
 
     }
   };
-  const handleCreateDocument = async () => {
 
-    try {
-
-      const response = await createDocument();
-
-      navigate(`/document/${response.document_id}`);
-
-    } catch (error) {
-
-      console.log(error);
-
-    }
-  };
 
   if (loading) {
     return (
@@ -88,9 +75,6 @@ function Dashboard() {
         )
       }
       <AppLayout
-        onCreateDocument={
-          handleCreateDocument
-        }
       >
 
         <MainContent
